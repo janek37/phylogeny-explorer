@@ -10,13 +10,13 @@ function addPositions(tree: TreeParent, startPosition: number = 0): {graph: Pare
   let newChildren = [];
   let newChild;
   for (const child of tree.children) {
-    if (child.type === 'leaf') {
-      newChild = new Leaf(child, position);
-      position++;
-    } else {
+    if ('children' in child) {
       const result = addPositions(child, position);
       newChild = result.graph;
       position = result.position;
+    } else {
+      newChild = new Leaf(child, position);
+      position++;
     }
     newChildren.push(newChild);
   }

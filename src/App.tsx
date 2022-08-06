@@ -6,17 +6,15 @@ import makeGraph from "./makeGraph";
 
 const data = {
   children: [
-    {url: '', type: 'leaf'},
+    {url: ''},
     {
       children: [
-        {url: '', type: 'leaf'},
-        {url: '', type: 'leaf'},
-        {children: [{url: '', type: 'leaf'}, {url: '', type: 'leaf'}], type: 'parent'},
+        {url: ''},
+        {url: ''},
+        {children: [{url: ''}, {url: ''}]},
       ],
-      type: 'parent',
     }
   ],
-  type: 'parent',
 } as TreeParent;
 
 function App() {
