@@ -1,11 +1,6 @@
 import {TreeLeaf} from "./TreeNode";
 
-export interface GraphNode {
-  position: number;
-  level: number;
-
-  leavesCount(): number;
-}
+export type GraphNode = Leaf | Parent;
 
 export class Leaf {
   position: number;
