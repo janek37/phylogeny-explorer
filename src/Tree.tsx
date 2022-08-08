@@ -10,7 +10,7 @@ function Tree(props: {graph: Parent}) {
   const positioner = new Positioner({
     positionCount: props.graph.leavesCount(),
     levelCount: props.graph.level,
-    treeRadius: SIZE/2,
+    treeRadius: SIZE * 0.4,
     center: {x: SIZE/2, y: SIZE/2},
   });
   return <svg width={SIZE} height={SIZE}>

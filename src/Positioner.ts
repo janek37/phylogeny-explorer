@@ -15,6 +15,9 @@ class Positioner {
   }
 
   getRadius(level: number): number {
+    if (level < 0) {
+      return this.treeRadius - level;
+    }
     return (this.levelCount - level) / this.levelCount * this.treeRadius;
   }
 
@@ -26,6 +29,10 @@ class Positioner {
     const radius = this.getRadius(level);
     const angle = this.getAngle(position);
     return polar2cartesian({radius, angle}, this.center);
+  }
+
+  getImageSize(): number {
+    return this.treeRadius * Math.sin(Math.PI/this.positionCount) * 1.5;
   }
 }
 

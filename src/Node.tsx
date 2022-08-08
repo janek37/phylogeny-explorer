@@ -1,6 +1,7 @@
 import {GraphNode, Parent} from "./GraphNode";
 import Positioner from "./Positioner";
 import {arcTo, line, lineTo, path} from "./svg";
+import Image from "./Image";
 
 function Node(props: {node: Parent, positioner: Positioner}) {
   const {node, positioner} = props;
@@ -14,6 +15,8 @@ function Node(props: {node: Parent, positioner: Positioner}) {
     }
     if ('children' in child) {
       svgElements.push(<Node node={child} positioner={positioner}/>);
+    } else {
+      svgElements.push(<Image leaf={child} positioner={positioner} />);
     }
   }
   return <g>{svgElements}</g>;
