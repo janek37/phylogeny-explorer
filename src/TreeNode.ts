@@ -3,6 +3,7 @@ export type TreeLeaf = {
 }
 
 export type TreeParent = {
+  id: number;
   children: TreeNode[];
 }
 

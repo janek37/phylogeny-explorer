@@ -5,14 +5,15 @@ import type {TreeParent} from './TreeNode';
 import makeGraph from "./makeGraph";
 import axios from "axios";
 import trimData from "./trimData";
+import {InputTree} from "./InputTree";
 
 const MAX_LEVEL = 5;
 
-class App extends React.Component<{}, any> {
+class App extends React.Component<{}, {data: InputTree | undefined}> {
   constructor(props: {}) {
     super(props);
     this.state = {
-      data: {},
+      data: undefined,
     };
   }
 
@@ -25,7 +26,7 @@ class App extends React.Component<{}, any> {
   }
 
   render() {
-    if (Object.keys(this.state.data).length === 0) {
+    if (!this.state.data) {
       return <div></div>
     }
     const data = trimData(this.state.data, MAX_LEVEL) as TreeParent;
