@@ -1,6 +1,6 @@
-import {GraphNode, Parent} from "./GraphNode";
-import Positioner from "./Positioner";
-import {arcTo, line, lineTo, path} from "./svg";
+import {GraphNode, Parent} from "../GraphNode";
+import Positioner from "../Positioner";
+import {arcTo, line, lineTo, path} from "../svg";
 import Image from "./Image";
 
 function Node(props: {node: Parent, positioner: Positioner}) {

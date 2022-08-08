@@ -1,5 +1,5 @@
-import {Leaf} from "./GraphNode";
-import positioner from "./Positioner";
+import {Leaf} from "../GraphNode";
+import positioner from "../Positioner";
 
 function Image(props: {leaf: Leaf, positioner: positioner}) {
   const size = props.positioner.imageSize;

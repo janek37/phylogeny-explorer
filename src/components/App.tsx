@@ -1,11 +1,11 @@
 import React from 'react';
 import Tree from './Tree';
 
-import type {TreeParent} from './TreeNode';
-import makeGraph from "./makeGraph";
+import type {TreeParent} from '../TreeNode';
+import makeGraph from "../makeGraph";
 import axios from "axios";
-import trimData from "./trimData";
-import {InputTree} from "./InputTree";
+import trimData from "../trimData";
+import {InputTree} from "../InputTree";
 
 const MAX_LEVEL = 5;
 

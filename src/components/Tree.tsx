@@ -1,8 +1,8 @@
 import React from 'react';
 
-import type {Parent} from './GraphNode';
+import type {Parent} from '../GraphNode';
 import Node from "./Node";
-import Positioner from "./Positioner";
+import Positioner from "../Positioner";
 
 const SIZE = 900;
 
