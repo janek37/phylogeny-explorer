@@ -1,7 +1,7 @@
 import Coords from "./Coords";
 
-export function line(start: Coords, end: Coords) {
-  return <line x1={start.x} y1={start.y} x2={end.x} y2={end.y} stroke='black' strokeWidth={5} />
+export function line(start: Coords, end: Coords, key?: string) {
+  return <line key={key} x1={start.x} y1={start.y} x2={end.x} y2={end.y} stroke='black' strokeWidth={5} />
 }
 
 export function path(start: Coords, elements: string[]) {

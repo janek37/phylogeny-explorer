@@ -6,20 +6,22 @@ import Image from "./Image";
 function Node(props: {node: Parent, positioner: Positioner}) {
   const {node, positioner} = props;
   let svgElements = [];
-  svgElements.push(makeMainPath(node, positioner));
   for (const child of node.children) {
     if (child !== node.children[0] && child !== node.children.at(-1)) {
       const lineStart = positioner.getCoordinates(node.level, child.position);
       const lineEnd = positioner.getCoordinates(child.level, child.position);
-      svgElements.push(line(lineStart, lineEnd));
+      svgElements.push(line(lineStart, lineEnd, `line-${node.id}-${child.id}`));
     }
     if ('children' in child) {
-      svgElements.push(<Node node={child} positioner={positioner}/>);
+      svgElements.push(<Node key={child.id} node={child} positioner={positioner}/>);
     } else {
-      svgElements.push(<Image leaf={child} positioner={positioner} />);
+      svgElements.push(<Image key={child.id} leaf={child} positioner={positioner} />);
     }
   }
-  return <g>{svgElements}</g>;
+  return <g>
+    {makeMainPath(node, positioner)}
+    {svgElements}
+  </g>;
 }
 
 function makeMainPath(node: Parent, positioner: Positioner) {
