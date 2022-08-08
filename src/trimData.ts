@@ -4,7 +4,7 @@ import {InputLeaf, InputTree} from "./InputTree";
 function trimData(data: InputTree, levelLimit: number): TreeNode {
   if (levelLimit === 0) {
     const leaf = findLeaf(data);
-    return {url: leaf.image.image_url};
+    return {id: leaf.id, url: leaf.image.image_url};
   }
   if ('children' in data) {
     if (data.children.length === 1) {
@@ -16,7 +16,7 @@ function trimData(data: InputTree, levelLimit: number): TreeNode {
       };
     }
   } else {
-    return {url: data.image.image_url};
+    return {id: data.id, url: data.image.image_url};
   }
 }
 

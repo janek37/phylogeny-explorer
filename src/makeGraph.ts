@@ -20,7 +20,7 @@ function addPositions(tree: TreeParent, startPosition: number = 0): {graph: Pare
     }
     newChildren.push(newChild);
   }
-  return {graph: new Parent(newChildren), position: position};
+  return {graph: new Parent(tree.id, newChildren), position: position};
 }
 
 export default makeGraph;

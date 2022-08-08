@@ -3,11 +3,13 @@ import {TreeLeaf} from "./TreeNode";
 export type GraphNode = Leaf | Parent;
 
 export class Leaf {
+  id: number;
   position: number;
   level = 0;
   value: TreeLeaf;
 
   constructor(value: TreeLeaf, position: number) {
+    this.id = value.id;
     this.position = position;
     this.value = value;
   }
@@ -18,11 +20,13 @@ export class Leaf {
 }
 
 export class Parent {
+  id: number;
   position: number;
   level: number;
   children: GraphNode[];
 
-  constructor(children: GraphNode[]) {
+  constructor(id: number, children: GraphNode[]) {
+    this.id = id;
     this.children = children;
     this.position = this.getPosition();
     this.level = this.getLevel();

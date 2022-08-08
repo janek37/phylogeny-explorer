@@ -1,4 +1,5 @@
 export type TreeLeaf = {
+  id: number;
   url: string;
 }
 
