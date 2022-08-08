@@ -6,7 +6,11 @@ function trimData(data: any, levelCount: number): TreeNode {
     return {url: leaf.image.image_url};
   }
   if ('children' in data) {
-    return {children: data.children.map((child: any) => trimData(child, levelCount - 1))};
+    if (data.children.length === 1) {
+      return trimData(data.children[0], levelCount);
+    } else {
+      return {children: data.children.map((child: any) => trimData(child, levelCount - 1))};
+    }
   } else {
     return {url: data.image.image_url};
   }
