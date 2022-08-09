@@ -3,7 +3,7 @@ import Positioner from "../Positioner";
 import {arcTo, line, lineTo, path} from "../svg";
 import Image from "./Image";
 
-function Node(props: {node: Parent, positioner: Positioner}) {
+function Node(props: {node: Parent, positioner: Positioner, imageOnClick: (nodeId: number) => void}) {
   const {node, positioner} = props;
   let svgElements = [];
   for (const child of node.children) {
@@ -13,9 +13,9 @@ function Node(props: {node: Parent, positioner: Positioner}) {
       svgElements.push(line(lineStart, lineEnd, `line-${node.id}-${child.id}`));
     }
     if ('children' in child) {
-      svgElements.push(<Node key={child.id} node={child} positioner={positioner}/>);
+      svgElements.push(<Node key={child.id} node={child} positioner={positioner} imageOnClick={props.imageOnClick}/>);
     } else {
-      svgElements.push(<Image key={child.id} leaf={child} positioner={positioner} />);
+      svgElements.push(<Image key={child.id} leaf={child} positioner={positioner} onClick={props.imageOnClick} />);
     }
   }
   return <g>

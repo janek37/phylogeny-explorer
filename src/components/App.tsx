@@ -51,7 +51,7 @@ class App extends React.Component<{}, {data: InputTree | undefined; currentId: n
     const graph = makeGraph(data);
     return (
       <div className="App">
-        <Tree graph={graph}/>
+        <Tree graph={graph} imageOnClick={(nodeId: number) => this.setState({currentId: nodeId})}/>
       </div>
     );
   }

@@ -4,7 +4,7 @@ import {InputLeaf, InputTree} from "./InputTree";
 function trimData(data: InputTree, levelLimit: number): TreeNode {
   if (levelLimit === 0) {
     const leaf = findLeaf(data);
-    let trimmed: TreeNode = {id: leaf.id, url: leaf.image.image_url};
+    let trimmed: TreeNode = {id: data.id, url: leaf.image.image_url};
     if ('species_count' in data && data.species_count > 1) {
       trimmed['speciesCount'] = data.species_count;
     }

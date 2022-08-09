@@ -4,9 +4,9 @@ import type {Parent} from '../GraphNode';
 import Node from "./Node";
 import Positioner from "../Positioner";
 
-const SIZE = 900;
+const SIZE = 850;
 
-function Tree(props: {graph: Parent}) {
+function Tree(props: {graph: Parent, imageOnClick: (nodeId: number) => void}) {
   const positioner = new Positioner({
     positionCount: props.graph.leavesCount(),
     levelCount: props.graph.level,
@@ -14,7 +14,7 @@ function Tree(props: {graph: Parent}) {
     center: {x: SIZE/2, y: SIZE/2},
   });
   return <svg width={SIZE} height={SIZE}>
-    <Node node={props.graph} positioner={positioner} />
+    <Node node={props.graph} positioner={positioner} imageOnClick={props.imageOnClick} />
   </svg>
 }
 
