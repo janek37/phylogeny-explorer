@@ -1,4 +1,6 @@
-function polar2cartesian(polarCoordinates: {radius: number, angle: number}, center: {x: number, y: number}): {x: number, y: number} {
+import Coords from "./Coords";
+
+function polar2cartesian(polarCoordinates: {radius: number, angle: number}, center: Coords): Coords {
   const {x: x0, y: y0} = center;
   let {radius, angle} = polarCoordinates;
   return {
