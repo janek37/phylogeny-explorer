@@ -2,6 +2,7 @@ export type TreeLeaf = {
   id: number;
   url: string;
   speciesCount?: number;
+  name?: string;
 }
 
 export type TreeParent = {

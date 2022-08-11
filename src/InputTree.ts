@@ -7,6 +7,7 @@ export type InputParent = InputNode & {
 
 export type InputLeaf = InputNode & {
   image: Image;
+  name: string;
 };
 
 type InputNode = {

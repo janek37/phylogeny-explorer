@@ -15,6 +15,7 @@ function Image(props: {leaf: Leaf, positioner: positioner, onClick: (nodeId: num
   }>
     <image href={props.leaf.value.url} width={size} height={size} x={x - size/2} y={y - size/2}/>
     <text x={x + size/2} y={y + size/2} className='num' textAnchor='end'>{props.leaf.value.speciesCount}</text>
+    <title>{leaf.value.name}</title>
   </g>;
 }
 
