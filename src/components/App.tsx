@@ -6,11 +6,11 @@ import type {TreeParent} from '../TreeNode';
 import makeGraph from "../makeGraph";
 import axios from "axios";
 import trimData from "../trimData";
-import {InputTree} from "../InputTree";
+import {InputParent, InputTree} from "../InputTree";
 
-const MAX_LEVEL = 5;
+const MAX_LEAF_COUNT = 20;
 
-type Index = {[key: number]: InputTree};
+type Index = {[key: number]: InputParent};
 
 class App extends React.Component<{}, {data: InputTree | undefined; currentId: number, index: Index, nodeStack: number[]}> {
   constructor(props: {}) {
@@ -74,7 +74,7 @@ class App extends React.Component<{}, {data: InputTree | undefined; currentId: n
     if (!this.state.data) {
       return <div></div>
     }
-    let data = trimData(this.state.index[this.state.currentId], MAX_LEVEL) as TreeParent;
+    let data = trimData(this.state.index[this.state.currentId], MAX_LEAF_COUNT) as TreeParent;
     data = this.addOutgroup(data);
     let graph = makeGraph(data);
     return (
