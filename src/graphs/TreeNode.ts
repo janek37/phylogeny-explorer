@@ -3,6 +3,7 @@ export type TreeLeaf = {
   url: string;
   speciesCount?: number;
   name?: string;
+  extinct: boolean;
 }
 
 export type TreeParent = {

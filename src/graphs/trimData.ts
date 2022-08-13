@@ -58,7 +58,7 @@ function trimNode(data: InputTree): TreeNode {
 
 function trimNodeToLeaf(data: InputTree): TreeLeaf {
   const leaf = findLeaf(data);
-  let trimmed: TreeNode = {id: data.id, url: leaf.image.image_url, name: data.name};
+  let trimmed: TreeNode = {id: data.id, url: leaf.image.image_url, name: data.name, extinct: data.extinct};
   if ('species_count' in data && data.species_count > 1) {
     trimmed['speciesCount'] = data.species_count;
   } else {
@@ -72,7 +72,7 @@ function trimNodeToLeaf(data: InputTree): TreeLeaf {
 }
 
 function trimLeaf(leaf: InputLeaf): TreeLeaf {
-  return {id: leaf.id, url: leaf.image.image_url, name: leaf.name};
+  return {id: leaf.id, url: leaf.image.image_url, name: leaf.name, extinct: leaf.extinct};
 }
 
 function findLeaf(node: InputTree): InputLeaf {

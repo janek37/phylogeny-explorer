@@ -13,7 +13,7 @@ function prepareGraph(inputNode: InputParent, maxLeafCount: number, isRoot: bool
 
 function addOutgroup(treeNode: TreeParent) {
   const outgroup = {
-    id: -1, url: '/outgroup.svg',
+    id: -1, url: '/outgroup.svg', extinct: false
   }
   return {id: treeNode.id, children: [outgroup, treeNode]};
 }
