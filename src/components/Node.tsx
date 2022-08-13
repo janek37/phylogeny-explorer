@@ -1,4 +1,4 @@
-import {GraphNode, Parent} from "../GraphNode";
+import {GraphNode, Parent} from "../graphs/GraphNode";
 import Positioner from "../Positioner";
 import {arcTo, line, lineTo, path} from "../svg";
 import Image from "./Image";

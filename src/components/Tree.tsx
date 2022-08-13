@@ -1,7 +1,7 @@
 import './Tree.css';
 import React from 'react';
 
-import type {Parent} from '../GraphNode';
+import type {Parent} from '../graphs/GraphNode';
 import Node from "./Node";
 import Positioner from "../Positioner";
 

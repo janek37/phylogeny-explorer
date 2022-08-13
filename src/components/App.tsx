@@ -2,11 +2,9 @@ import './App.css';
 import React from 'react';
 import Tree from './Tree';
 
-import type {TreeParent} from '../TreeNode';
-import makeGraph from "../makeGraph";
 import axios from "axios";
-import trimData from "../trimData";
-import {InputParent, InputTree} from "../InputTree";
+import {InputParent, InputTree} from "../graphs/InputTree";
+import prepareGraph from "../graphs/prepareGraph";
 
 const MAX_LEAF_COUNT = 20;
 
@@ -59,24 +57,15 @@ class App extends React.Component<{}, {data: InputTree | undefined; currentId: n
     }
   }
 
-  addOutgroup(data: TreeParent) {
-    if (this.state.nodeStack.length > 0) {
-      const outgroup = {
-        id: -1, url: '/outgroup.svg',
-      }
-      return {id: data.id, children: [outgroup, data]};
-    } else {
-      return data;
-    }
-  }
-
   render() {
     if (!this.state.data) {
       return <div></div>
     }
-    let data = trimData(this.state.index[this.state.currentId], MAX_LEAF_COUNT) as TreeParent;
-    data = this.addOutgroup(data);
-    let graph = makeGraph(data);
+    let graph = prepareGraph(
+      this.state.index[this.state.currentId],
+      MAX_LEAF_COUNT,
+      this.state.nodeStack.length === 0,
+    );
     return (
       <div className="App">
         <Tree graph={graph} imageOnClick={(nodeId: number) => this.switchNode(nodeId)}/>

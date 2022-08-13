@@ -1,4 +1,4 @@
-import {Leaf} from "../GraphNode";
+import {Leaf} from "../graphs/GraphNode";
 import positioner from "../Positioner";
 import './Image.css';
 
