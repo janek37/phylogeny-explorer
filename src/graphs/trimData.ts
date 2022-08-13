@@ -58,7 +58,14 @@ function trimNode(data: InputTree): TreeNode {
 
 function trimNodeToLeaf(data: InputTree): TreeLeaf {
   const leaf = findLeaf(data);
-  let trimmed: TreeNode = {id: data.id, url: leaf.image.image_url, name: data.name, extinct: data.extinct};
+  const thumbUrl = getThumbnailUrl(leaf.name, leaf.image.image_url);
+  let trimmed: TreeNode = {
+    id: data.id,
+    url: leaf.image.image_url,
+    thumbUrl: thumbUrl,
+    name: data.name,
+    extinct: data.extinct,
+  };
   if ('species_count' in data && data.species_count > 1) {
     trimmed['speciesCount'] = data.species_count;
   } else {
@@ -71,8 +78,22 @@ function trimNodeToLeaf(data: InputTree): TreeLeaf {
   return trimmed;
 }
 
+function getThumbnailUrl(name: string, imageUrl: string): string {
+  let extension = imageUrl.split('.').pop() as string;
+  if (!['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'].includes(extension)) {
+    extension = 'jpg';
+  }
+  return `/thumbnails/${name}.${extension}`;
+}
+
 function trimLeaf(leaf: InputLeaf): TreeLeaf {
-  return {id: leaf.id, url: leaf.image.image_url, name: leaf.name, extinct: leaf.extinct};
+  return {
+    id: leaf.id,
+    url: leaf.image.image_url,
+    thumbUrl: getThumbnailUrl(leaf.name, leaf.image.image_url),
+    name: leaf.name,
+    extinct: leaf.extinct,
+  };
 }
 
 function findLeaf(node: InputTree): InputLeaf {

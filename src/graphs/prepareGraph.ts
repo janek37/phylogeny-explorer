@@ -1,5 +1,5 @@
 import trimData from "./trimData";
-import {TreeParent} from "./TreeNode";
+import {TreeLeaf, TreeParent} from "./TreeNode";
 import {InputParent} from "./InputTree";
 import makeGraph from "./makeGraph";
 
@@ -11,9 +11,9 @@ function prepareGraph(inputNode: InputParent, maxLeafCount: number, isRoot: bool
   return makeGraph(data);
 }
 
-function addOutgroup(treeNode: TreeParent) {
-  const outgroup = {
-    id: -1, url: '/outgroup.svg', extinct: false
+function addOutgroup(treeNode: TreeParent): TreeParent {
+  const outgroup: TreeLeaf = {
+    id: -1, url: '/outgroup.svg', thumbUrl: '/outgroup.svg', extinct: false
   }
   return {id: treeNode.id, children: [outgroup, treeNode]};
 }

@@ -1,6 +1,7 @@
 export type TreeLeaf = {
   id: number;
   url: string;
+  thumbUrl: string;
   speciesCount?: number;
   name?: string;
   extinct: boolean;
