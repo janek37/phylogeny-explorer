@@ -6,7 +6,7 @@ function Image(props: {leaf: Leaf, positioner: positioner, onClick: (nodeId: num
   const size = props.positioner.imageSize;
   const {leaf} = props;
   const {x, y} = props.positioner.getImageCoordinates(leaf.position);
-  return <g onClick={
+  return <g className='image' onClick={
     () => {
       if ((leaf.value.speciesCount && leaf.value.speciesCount > 1) || leaf.value.id === -1) {
         props.onClick(props.leaf.id);
