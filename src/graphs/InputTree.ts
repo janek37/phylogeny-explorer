@@ -10,17 +10,22 @@ export type InputLeaf = InputNode & {
   name: string;
 };
 
+type LANG = 'en' | 'pl';
+
 type InputNode = {
   id: number;
   name?: string;
   rank: string;
   extinct: boolean;
-  local_names: {[key: string]: string};
+  local_names: {[key in LANG]?: string};
   known_for: KnownForItem[];
 };
 
 type KnownForItem = {
-  image: Image | undefined;
+  image?: Image;
+  url?: string;
+  name?: string;
+  local_names: {[key in LANG]?: string},
 };
 
 type Image = {
