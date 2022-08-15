@@ -1,77 +1,85 @@
 import './App.css';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Tree from './Tree';
 
 import axios from "axios";
 import {InputParent, InputTree} from "../graphs/InputTree";
 import prepareGraph from "../graphs/prepareGraph";
+import {useNavigate, useParams} from "react-router-dom";
 
 const MAX_LEAF_COUNT = 20;
 
+const OUTGROUP_JUMP = 4;
+
 type Index = {[key: number]: InputParent};
 
-class App extends React.Component<{}, {data: InputTree | undefined; currentId: number, index: Index, nodeStack: number[]}> {
-  constructor(props: {}) {
-    super(props);
-    this.state = {
-      data: undefined,
-      currentId: 0,
-      index: {},
-      nodeStack: [],
-    };
-  }
+function App() {
+  const [data, setData] = useState<InputTree | undefined>(undefined);
+  const [index, setIndex] = useState<Index | undefined>(undefined);
+  const [nodeStack] = useState<number[]>([]);
+  const navigate = useNavigate();
+  const params = useParams();
+  const nodeId = params.nodeId ? parseInt(params.nodeId, 10) : 0;
 
-  componentDidMount() {
+  useEffect(() => {
     axios.get(`/export.json`)
       .then(res => {
-        const data = res.data;
-        const index = this.buildIndex(data);
-        this.setState({ data, index });
+        const data: InputParent = res.data;
+        setData(data);
+        setIndex(buildIndex(data));
       });
-  }
+  }, []);
 
-  buildIndex(data: InputTree): Index {
-    let index: Index = {};
-    if ('children' in data) {
-      index[data.id] = data;
-      for (const child of data.children) {
-        Object.assign(index, this.buildIndex(child));
-      }
+  useEffect(() => {
+    if (index && nodeId !== 0 && nodeStack.length === 0) {
+      nodeStack.push(getAncestorId(nodeId, OUTGROUP_JUMP, index));
     }
-    return index;
-  }
+  });
 
-  switchNode(nodeId: number) {
-    if (nodeId === -1) {
-      this.setState({
-        currentId: this.state.nodeStack.at(-1) as number,
-        nodeStack: this.state.nodeStack.slice(0, -1),
-      });
+  function switchToNode(newNodeId: number) {
+    if (newNodeId === -1) {
+      newNodeId = nodeStack.pop() as number;
     } else {
-      let newStack = this.state.nodeStack.slice();
-      newStack.push(this.state.currentId);
-      this.setState({
-        currentId: nodeId,
-        nodeStack: newStack,
-      });
+      nodeStack.push(nodeId);
     }
+    navigate(`/${newNodeId}`);
   }
 
-  render() {
-    if (!this.state.data) {
-      return <div></div>
-    }
-    let graph = prepareGraph(
-      this.state.index[this.state.currentId],
-      MAX_LEAF_COUNT,
-      this.state.nodeStack.length === 0,
-    );
-    return (
-      <div className="App">
-        <Tree graph={graph} imageOnClick={(nodeId: number) => this.switchNode(nodeId)}/>
-      </div>
-    );
+  if (!data || !index) {
+    return <div></div>
   }
+  let graph = prepareGraph(
+    index[nodeId],
+    MAX_LEAF_COUNT,
+  );
+  return (
+    <div className="App">
+      <Tree
+        graph={graph}
+        imageOnClick={switchToNode}
+      />
+    </div>
+  );
+}
+
+function buildIndex(data: InputTree): Index {
+  let index: Index = {};
+  if ('children' in data) {
+    index[data.id] = data;
+    for (const child of data.children) {
+      Object.assign(index, buildIndex(child));
+    }
+  }
+  return index;
+}
+
+function getAncestorId(nodeId: number, jump: number, index: Index): number {
+  let ancestorId = nodeId;
+  for (let i = 0; i < jump; i++) {
+    ancestorId = index[ancestorId].parent_id;
+    if (ancestorId === 0) break;
+  }
+  return ancestorId;
 }
 
 export default App;

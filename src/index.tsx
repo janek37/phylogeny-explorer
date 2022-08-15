@@ -3,13 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />}/>
+        <Route
+          path="/0"
+          element={<Navigate to="/" replace />}
+        />
+        <Route path=':nodeId' element={<App />}/>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -1,6 +1,7 @@
 export type InputTree = InputParent | InputLeaf;
 
 export type InputParent = InputNode & {
+  parent_id: number;
   children: InputTree[];
   species_count: number;
 };

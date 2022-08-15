@@ -3,9 +3,9 @@ import {TreeLeaf, TreeParent} from "./TreeNode";
 import {InputParent} from "./InputTree";
 import makeGraph from "./makeGraph";
 
-function prepareGraph(inputNode: InputParent, maxLeafCount: number, isRoot: boolean) {
+function prepareGraph(inputNode: InputParent, maxLeafCount: number) {
   let data = trimData(inputNode, maxLeafCount) as TreeParent;
-  if (!isRoot) {
+  if (inputNode.parent_id !== null) {
     data = addOutgroup(data);
   }
   return makeGraph(data);
