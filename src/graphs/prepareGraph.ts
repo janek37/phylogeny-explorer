@@ -13,7 +13,20 @@ function prepareGraph(inputNode: InputParent, maxLeafCount: number) {
 
 function addOutgroup(treeNode: TreeParent): TreeParent {
   const outgroup: TreeLeaf = {
-    id: -1, url: '/outgroup.svg', thumbUrl: '/outgroup.svg', extinct: false
+    id: -1,
+    extinct: false,
+    localNames: {},
+    image: {
+      image_url: '/outgroup.svg',
+      url: '/outgroup.svg',
+      thumbnail_url: '/outgroup.svg',
+      local_thumbnail_url: '/outgroup.svg',
+      author: '',
+      license_code: '',
+      license_string: '',
+      license_url: '',
+      name: undefined,
+    }
   }
   return {id: treeNode.id, children: [outgroup, treeNode]};
 }

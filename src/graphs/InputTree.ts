@@ -13,12 +13,14 @@ export type InputLeaf = InputNode & {
 
 type LANG = 'en' | 'pl';
 
+export type LocalNames = {[key in LANG]?: string};
+
 type InputNode = {
   id: number;
   name?: string;
   rank: string;
   extinct: boolean;
-  local_names: {[key in LANG]?: string};
+  local_names: LocalNames;
   known_for: KnownForItem[];
 };
 
@@ -26,11 +28,13 @@ type KnownForItem = {
   image?: Image;
   url?: string;
   name?: string;
-  local_names: {[key in LANG]?: string},
+  local_names: LocalNames,
 };
 
-type Image = {
+export type Image = {
   image_url: string;
+  thumbnail_url: string;
+  local_thumbnail_url: string;
   url: string;
   author: string;
   license_code: string;

@@ -1,10 +1,13 @@
+import {LocalNames} from "./InputTree";
+import type {Image} from "./InputTree";
+
 export type TreeLeaf = {
   id: number;
-  url: string;
-  thumbUrl: string;
   speciesCount?: number;
   name?: string;
   extinct: boolean;
+  localNames: LocalNames;
+  image: Image;
 }
 
 export type TreeParent = {

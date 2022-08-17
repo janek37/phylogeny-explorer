@@ -1,5 +1,5 @@
 import {TreeLeaf, TreeNode, TreeParent} from "./TreeNode";
-import {InputLeaf, InputParent, InputTree} from "./InputTree";
+import {Image, InputLeaf, InputParent, InputTree} from "./InputTree";
 
 function trimData(data: InputParent, leafLimit: number): TreeNode {
   let nodes: (TreeNode|undefined)[] = [undefined];
@@ -58,14 +58,7 @@ function trimNode(data: InputTree): TreeNode {
 
 function trimNodeToLeaf(data: InputTree): TreeLeaf {
   const leaf = findLeaf(data);
-  const thumbUrl = getThumbnailUrl(leaf.name, leaf.image.image_url);
-  let trimmed: TreeNode = {
-    id: data.id,
-    url: leaf.image.image_url,
-    thumbUrl: thumbUrl,
-    name: data.name,
-    extinct: data.extinct,
-  };
+  let trimmed: TreeNode = makeLeaf(data, leaf.image);
   if ('species_count' in data && data.species_count > 1) {
     trimmed['speciesCount'] = data.species_count;
   } else {
@@ -78,22 +71,18 @@ function trimNodeToLeaf(data: InputTree): TreeLeaf {
   return trimmed;
 }
 
-function getThumbnailUrl(name: string, imageUrl: string): string {
-  let extension = imageUrl.split('.').pop() as string;
-  if (!['jpg', 'JPG', 'jpeg', 'JPEG', 'png', 'PNG', 'gif', 'GIF'].includes(extension)) {
-    extension = 'jpg';
-  }
-  return `/thumbnails/${name}.${extension}`;
+function trimLeaf(leaf: InputLeaf): TreeLeaf {
+  return makeLeaf(leaf, leaf.image);
 }
 
-function trimLeaf(leaf: InputLeaf): TreeLeaf {
+function makeLeaf(data: InputTree, image: Image): TreeLeaf {
   return {
-    id: leaf.id,
-    url: leaf.image.image_url,
-    thumbUrl: getThumbnailUrl(leaf.name, leaf.image.image_url),
-    name: leaf.name,
-    extinct: leaf.extinct,
-  };
+    id: data.id,
+    name: data.name,
+    extinct: data.extinct,
+    localNames: data.local_names,
+    image: image,
+  }
 }
 
 function findLeaf(node: InputTree): InputLeaf {
