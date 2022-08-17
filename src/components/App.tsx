@@ -6,6 +6,8 @@ import axios from "axios";
 import {InputParent, InputTree} from "../graphs/InputTree";
 import prepareGraph from "../graphs/prepareGraph";
 import {useNavigate, useParams} from "react-router-dom";
+import {TreeLeaf} from "../graphs/TreeNode";
+import {Infobox} from "./Infobox";
 
 const MAX_LEAF_COUNT = 20;
 
@@ -16,6 +18,8 @@ type Index = {[key: number]: InputParent};
 function App() {
   const [data, setData] = useState<InputTree | undefined>(undefined);
   const [index, setIndex] = useState<Index | undefined>(undefined);
+  const [infoboxOpen, setInfoboxOpen] = useState<boolean>(false);
+  const [infoboxLeaf, setInfoboxLeaf] = useState<TreeLeaf | undefined>(undefined);
   const [nodeStack] = useState<number[]>([]);
   const navigate = useNavigate();
   const params = useParams();
@@ -45,6 +49,19 @@ function App() {
     navigate(`/${newNodeId}`);
   }
 
+  function openInfobox(leaf: TreeLeaf) {
+    setInfoboxLeaf(leaf);
+    setInfoboxOpen(true);
+  }
+
+  function imageOnClick(leaf: TreeLeaf) {
+    if ((leaf.speciesCount && leaf.speciesCount > 1) || leaf.id === -1) {
+      switchToNode(leaf.id);
+    } else {
+      openInfobox(leaf);
+    }
+  }
+
   if (!data || !index) {
     return <div></div>
   }
@@ -56,8 +73,9 @@ function App() {
     <div className="App">
       <Tree
         graph={graph}
-        imageOnClick={switchToNode}
+        imageOnClick={imageOnClick}
       />
+      <Infobox open={infoboxOpen} onClose={() => {setInfoboxOpen(false);}} leaf={infoboxLeaf}/>
     </div>
   );
 }

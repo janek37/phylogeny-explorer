@@ -2,8 +2,9 @@ import {GraphNode, Parent} from "../graphs/GraphNode";
 import Positioner from "../Positioner";
 import {arcTo, line, lineTo, path} from "../svg";
 import Image from "./Image";
+import {TreeLeaf} from "../graphs/TreeNode";
 
-function Node(props: {node: Parent, positioner: Positioner, imageOnClick: (nodeId: number) => void}) {
+function Node(props: {node: Parent, positioner: Positioner, imageOnClick: (nodeId: TreeLeaf) => void}) {
   const {node, positioner} = props;
   let svgElements = [];
   for (const child of node.children) {

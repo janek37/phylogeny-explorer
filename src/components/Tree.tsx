@@ -4,10 +4,11 @@ import React from 'react';
 import type {Parent} from '../graphs/GraphNode';
 import Node from "./Node";
 import Positioner from "../Positioner";
+import {TreeLeaf} from "../graphs/TreeNode";
 
 const SIZE = 500;
 
-function Tree(props: {graph: Parent, imageOnClick: (nodeId: number) => void}) {
+function Tree(props: {graph: Parent, imageOnClick: (leaf: TreeLeaf) => void}) {
   const positioner = new Positioner({
     positionCount: props.graph.leavesCount(),
     levelCount: props.graph.level,
