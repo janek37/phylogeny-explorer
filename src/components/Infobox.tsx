@@ -1,5 +1,5 @@
 import './Infobox.css';
-import {Dialog, DialogContent, DialogTitle} from "@mui/material";
+import {Dialog, DialogContent, DialogTitle, useMediaQuery, useTheme} from "@mui/material";
 import {TreeLeaf} from "../graphs/TreeNode";
 
 export function Infobox(props: {open: boolean, onClose: () => void, leaf: TreeLeaf | undefined}) {
@@ -11,8 +11,10 @@ export function Infobox(props: {open: boolean, onClose: () => void, leaf: TreeLe
       <span className='local-name'>{langName[1]}</span>
     </p>
   );
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullScreen={fullScreen}>
       <DialogTitle>{leaf?.name}</DialogTitle>
       <DialogContent>
         {localNameElements}
