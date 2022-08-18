@@ -24,7 +24,7 @@ type InputNode = {
   known_for: KnownForItem[];
 };
 
-type KnownForItem = {
+export type KnownForItem = {
   image?: Image;
   url?: string;
   name?: string;

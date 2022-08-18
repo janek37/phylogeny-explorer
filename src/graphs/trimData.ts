@@ -81,6 +81,7 @@ function makeLeaf(data: InputTree, image: Image): TreeLeaf {
     name: data.name,
     extinct: data.extinct,
     localNames: data.local_names,
+    knownFor: data.known_for,
     image: image,
   }
 }

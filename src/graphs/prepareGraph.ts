@@ -16,6 +16,7 @@ function addOutgroup(treeNode: TreeParent): TreeParent {
     id: -1,
     extinct: false,
     localNames: {},
+    knownFor: [],
     image: {
       image_url: '/outgroup.svg',
       url: '/outgroup.svg',

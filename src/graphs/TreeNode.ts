@@ -1,4 +1,4 @@
-import {LocalNames} from "./InputTree";
+import {KnownForItem, LocalNames} from "./InputTree";
 import type {Image} from "./InputTree";
 
 export type TreeLeaf = {
@@ -7,6 +7,7 @@ export type TreeLeaf = {
   name?: string;
   extinct: boolean;
   localNames: LocalNames;
+  knownFor: KnownForItem[];
   image: Image;
 }
 

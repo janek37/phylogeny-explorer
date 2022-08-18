@@ -1,15 +1,13 @@
 import './Infobox.css';
 import {Dialog, DialogContent, DialogTitle, useMediaQuery, useTheme} from "@mui/material";
 import {TreeLeaf} from "../graphs/TreeNode";
+import {LocalNames} from "./LocalNames";
 
 export function Infobox(props: {open: boolean, onClose: () => void, leaf: TreeLeaf | undefined}) {
   const {open, onClose, leaf} = props;
-  const localNames = leaf ? Object.entries(leaf.localNames) : [];
-  const localNameElements = localNames.map(
-    langName => <p key={langName[0]}>
-      <span className='local-name-lang'>{langName[0]}</span>:
-      <span className='local-name'>{langName[1]}</span>
-    </p>
+  const localNameElements = leaf && <LocalNames localNames={leaf.localNames}/>;
+  const knownForElements = leaf && leaf.knownFor.map((knownForItem, i) =>
+    <LocalNames key={i} localNames={knownForItem.local_names}/>
   );
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -18,6 +16,8 @@ export function Infobox(props: {open: boolean, onClose: () => void, leaf: TreeLe
       <DialogTitle>{leaf?.name}</DialogTitle>
       <DialogContent>
         {localNameElements}
+        {knownForElements && knownForElements.length > 0 && <h4>Known for:</h4>}
+        {knownForElements}
         <a href={leaf?.image.image_url} target='_blank' rel='noreferrer'>
           <img src={leaf?.image.image_url} alt={leaf?.name} className='infobox-image'/>
         </a>
