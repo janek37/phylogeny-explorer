@@ -9,7 +9,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {TreeLeaf} from "../graphs/TreeNode";
 import {Infobox} from "./Infobox";
 
-const MAX_LEAF_COUNT = 20;
+const MAX_LEAF_COUNT = 15;
 
 const OUTGROUP_JUMP = 4;
 
