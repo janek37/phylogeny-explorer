@@ -26,7 +26,7 @@ function App() {
   const nodeId = params.nodeId ? parseInt(params.nodeId, 10) : 0;
 
   useEffect(() => {
-    axios.get(`/export.json`)
+    axios.get(`${process.env.PUBLIC_URL}/export.json`)
       .then(res => {
         const data: InputParent = res.data;
         setData(data);
