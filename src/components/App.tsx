@@ -18,12 +18,14 @@ type Index = {[key: number]: InputParent};
 function App() {
   const [data, setData] = useState<InputTree | undefined>(undefined);
   const [index, setIndex] = useState<Index | undefined>(undefined);
-  const [infoboxOpen, setInfoboxOpen] = useState<boolean>(false);
-  const [infoboxLeaf, setInfoboxLeaf] = useState<TreeLeaf | undefined>(undefined);
   const [nodeStack] = useState<number[]>([]);
   const navigate = useNavigate();
   const params = useParams();
   const nodeId = params.nodeId ? parseInt(params.nodeId, 10) : 0;
+  const {speciesName} = params;
+  if (params.nodeId === '0' && !speciesName) {
+    navigate('/');
+  }
 
   useEffect(() => {
     axios.get(`${process.env.PUBLIC_URL}/export.json`)
@@ -49,16 +51,11 @@ function App() {
     navigate(`/${newNodeId}`);
   }
 
-  function openInfobox(leaf: TreeLeaf) {
-    setInfoboxLeaf(leaf);
-    setInfoboxOpen(true);
-  }
-
   function imageOnClick(leaf: TreeLeaf) {
     if ((leaf.speciesCount && leaf.speciesCount > 1) || leaf.id === -1) {
       switchToNode(leaf.id);
     } else {
-      openInfobox(leaf);
+      navigate(`/${nodeId}/${leaf.name}`);
     }
   }
 
@@ -69,13 +66,14 @@ function App() {
     index[nodeId],
     MAX_LEAF_COUNT,
   );
+  const openSpecies = speciesName ? graph.findSpecies(speciesName)?.value : undefined;
   return (
     <div className="App">
       <Tree
         graph={graph}
         imageOnClick={imageOnClick}
       />
-      <Infobox open={infoboxOpen} onClose={() => {setInfoboxOpen(false);}} leaf={infoboxLeaf}/>
+      <Infobox open={!!openSpecies} onClose={() => {navigate(`/${nodeId}`);}} leaf={openSpecies}/>
     </div>
   );
 }

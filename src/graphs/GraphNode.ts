@@ -46,4 +46,15 @@ export class Parent {
   public leavesCount(): number {
     return this.children.map(child => child.leavesCount()).reduce((n1, n2) => n1 + n2);
   }
+
+  public findSpecies(speciesName: string): Leaf | undefined {
+    for (const child of this.children) {
+      if ('children' in child) {
+        const species = child.findSpecies(speciesName);
+        if (species) return species;
+      } else if (child.value.name === speciesName) {
+        return child;
+      }
+    }
+  }
 }
