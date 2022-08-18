@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/phylogeny-explorer/static/css/main.35bf892c.css",
+    "main.js": "/phylogeny-explorer/static/js/main.af6bba3b.js",
+    "static/js/787.4e8a3f45.chunk.js": "/phylogeny-explorer/static/js/787.4e8a3f45.chunk.js",
+    "index.html": "/phylogeny-explorer/index.html",
+    "main.35bf892c.css.map": "/phylogeny-explorer/static/css/main.35bf892c.css.map",
+    "main.af6bba3b.js.map": "/phylogeny-explorer/static/js/main.af6bba3b.js.map",
+    "787.4e8a3f45.chunk.js.map": "/phylogeny-explorer/static/js/787.4e8a3f45.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35bf892c.css",
+    "static/js/main.af6bba3b.js"
+  ]
+}
