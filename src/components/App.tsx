@@ -23,9 +23,11 @@ function App() {
   const params = useParams();
   const nodeId = params.nodeId ? parseInt(params.nodeId, 10) : 0;
   const {speciesName} = params;
-  if (params.nodeId === '0' && !speciesName) {
-    navigate('/');
-  }
+  useEffect(() => {
+    if (params.nodeId === '0' && !speciesName) {
+      navigate('/');
+    }
+  });
 
   useEffect(() => {
     axios.get(`${process.env.PUBLIC_URL}/export.json`)
@@ -69,6 +71,7 @@ function App() {
   const openSpecies = speciesName ? graph.findSpecies(speciesName)?.value : undefined;
   return (
     <div className="App">
+      <div className='node-desc'>{index[nodeId].name}</div>
       <Tree
         graph={graph}
         imageOnClick={imageOnClick}
