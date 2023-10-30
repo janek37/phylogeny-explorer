@@ -15,19 +15,22 @@ const OUTGROUP_JUMP = 4;
 
 type Index = {[key: number]: InputParent};
 
+function getNodePath(nodeId: number): string {
+  return nodeId === 0 ? '/' : `/${nodeId}`;
+}
+
+function getLeafPath(nodeId: number, leaf: TreeLeaf): string {
+  return `/${nodeId}/${leaf.name}`
+}
+
 function App() {
   const [data, setData] = useState<InputTree | undefined>(undefined);
   const [index, setIndex] = useState<Index | undefined>(undefined);
-  const [nodeStack] = useState<number[]>([]);
+  const [nodeStack, setNodeStack] = useState<number[]>([]);
   const navigate = useNavigate();
   const params = useParams();
   const nodeId = params.nodeId ? parseInt(params.nodeId, 10) : 0;
   const {speciesName} = params;
-  useEffect(() => {
-    if (params.nodeId === '0' && !speciesName) {
-      navigate('/');
-    }
-  });
 
   useEffect(() => {
     axios.get(`${process.env.PUBLIC_URL}/export.json`)
@@ -38,26 +41,27 @@ function App() {
       });
   }, []);
 
-  useEffect(() => {
-    if (index && nodeId !== 0 && nodeStack.length === 0) {
-      nodeStack.push(getAncestorId(nodeId, OUTGROUP_JUMP, index));
-    }
-  });
-
   function switchToNode(newNodeId: number) {
     if (newNodeId === -1) {
-      newNodeId = nodeStack.pop() as number;
+      if (nodeStack.length > 0) {
+        newNodeId = nodeStack[nodeStack.length - 1];
+        setNodeStack(nodeStack.filter((value, index) => index !== nodeStack.length - 1));
+      } else if (index) {
+        newNodeId = getAncestorId(nodeId, OUTGROUP_JUMP, index);
+      } else {
+        newNodeId = 0;
+      }
     } else {
-      nodeStack.push(nodeId);
+      setNodeStack([...nodeStack, nodeId]);
     }
-    navigate(`/${newNodeId}`);
+    navigate(getNodePath(newNodeId));
   }
 
   function imageOnClick(leaf: TreeLeaf) {
     if ((leaf.speciesCount && leaf.speciesCount > 1) || leaf.id === -1) {
       switchToNode(leaf.id);
     } else {
-      navigate(`/${nodeId}/${leaf.name}`);
+      navigate(getLeafPath(nodeId, leaf));
     }
   }
 
@@ -76,7 +80,7 @@ function App() {
         graph={graph}
         imageOnClick={imageOnClick}
       />
-      <Infobox open={!!openSpecies} onClose={() => {navigate(`/${nodeId}`);}} leaf={openSpecies}/>
+      <Infobox open={!!openSpecies} onClose={() => {navigate(getNodePath(nodeId));}} leaf={openSpecies}/>
     </div>
   );
 }
